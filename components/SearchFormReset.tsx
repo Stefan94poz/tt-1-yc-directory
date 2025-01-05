@@ -10,6 +10,7 @@ function SearchFormReset() {
       form.reset();
     }
   };
+
   return (
     <div className="flex gap-2">
       <button type="reset" onClick={reset}>
