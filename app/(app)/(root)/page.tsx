@@ -37,7 +37,7 @@ export default async function Home({
         </p>
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: StartUpCardType, index: number) => (
+            posts.map((post: StartUpCardType) => (
               <StartupCard key={post.id} post={post} />
             ))
           ) : (
