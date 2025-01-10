@@ -8,6 +8,15 @@ export const Startups: CollectionConfig = {
   access: {
     read: () => true,
   },
+  // defaultPopulate: {
+  //   title: true,
+  //   slug: true,
+  //   categories: true,
+  //   meta: {
+  //     image: true,
+  //     description: true,
+  //   },
+  // },
 
   fields: [
     {
@@ -24,7 +33,7 @@ export const Startups: CollectionConfig = {
       name: "views",
       type: "number",
       required: false,
-      hidden: true,
+      defaultValue: 0,
     },
     {
       name: "description",
@@ -36,6 +45,11 @@ export const Startups: CollectionConfig = {
       type: "text",
       required: true,
     },
+
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+    },
   ],
-  upload: true,
 };

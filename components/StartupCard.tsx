@@ -6,20 +6,20 @@ import { Button } from "./ui/button";
 
 function StartupCard({ post }: { post: StartupTypeCard }) {
   const {
-    _createdAt,
+    createdAt,
     views,
     author: { _id: authorId, name },
-    _id,
+    id,
     title,
-    image,
+    image: { url },
     description,
     category,
   } = post;
-
+  console.log("ASD,", post);
   return (
     <li className="startup-card group">
       <div className="flex justify-between">
-        <p className="startup_card_date">{formatDate(_createdAt)}</p>
+        <p className="startup_card_date">{formatDate(new Date(createdAt))}</p>
         <div className="flex gap-1.5">
           <EyeIcon className="size-6 text-primary" />
           <span className="text-16-medium">{views}</span>
@@ -31,7 +31,7 @@ function StartupCard({ post }: { post: StartupTypeCard }) {
           <Link href={`/user/${authorId}`}>
             <p className="text-16-medium line-clamp-1">{name}</p>
           </Link>
-          <Link href={`/startup/${_id}`}>
+          <Link href={`/startup/${id}`}>
             <h3 className="text-36-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
@@ -45,16 +45,26 @@ function StartupCard({ post }: { post: StartupTypeCard }) {
           />
         </Link>
       </div>
-      <Link href={`/startup/${_id}`}>
+      <Link href={`/startup/${id}`}>
         <p className="startup_desc">{description}</p>
-        <img src={image} alt="placeholder" className="startup_card_img" />
+        <Image
+          src={url}
+          alt="placeholder"
+          className="startup_card_img"
+          width={500}
+          height={500}
+          style={{
+            maxHeight: "150px",
+            objectFit: "cover",
+          }}
+        />
       </Link>
       <div className="flex-between gap-3 mt-5">
         <Link href={`/?query=${category.toLowerCase()}`}>
           <p className="text-16-medium">{category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
-          <Link href={`/startup/${_id}`}>Details</Link>
+          <Link href={`/startup/${id}`}>Details</Link>
         </Button>
       </div>
     </li>

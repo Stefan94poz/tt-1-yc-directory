@@ -2,6 +2,9 @@ import type { CollectionConfig } from "payload";
 
 export const Users: CollectionConfig = {
   slug: "users",
+  access: {
+    create: () => true,
+  },
   admin: {
     useAsTitle: "email",
   },
@@ -13,7 +16,7 @@ export const Users: CollectionConfig = {
     //   name: "startups",
     //   type: "join",
     //   on: "startups",
-    //   collection: "startups",
+    //   collection: "author",
     // },
   ],
 };
