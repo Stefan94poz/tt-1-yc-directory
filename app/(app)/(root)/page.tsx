@@ -1,5 +1,6 @@
 import StartupCard from "@/components/StartupCard";
 import SearchForm from "../../../components/SearchForm";
+import { Startup } from "@/payload-types";
 
 export default async function Home({
   searchParams,
@@ -11,19 +12,6 @@ export default async function Home({
     (res) => res.json()
   );
   console.log(startups);
-  // const posts = [
-  //   {
-  //     _createdAt: new Date(),
-  //     views: 55,
-  //     author: { _id: 1, name: "Stefan Grom" },
-  //     _id: 1,
-  //     description: "This is a description of the startup",
-  //     title: "Make Stefa great again",
-  //     image:
-  //       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-  //     category: "Robots",
-  //   },
-  // ];
 
   return (
     <>
@@ -40,7 +28,7 @@ export default async function Home({
         </p>
         <ul className="mt-7 card_grid">
           {startups?.docs?.length > 0 ? (
-            startups.docs.map((startup: StartUpCardType, index: number) => (
+            startups.docs.map((startup: Startup, index: number) => (
               <StartupCard key={index} post={startup} />
             ))
           ) : (

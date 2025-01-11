@@ -4,6 +4,7 @@ export const Users: CollectionConfig = {
   slug: "users",
   access: {
     create: () => true,
+    read: () => true,
   },
   admin: {
     useAsTitle: "email",
@@ -12,6 +13,7 @@ export const Users: CollectionConfig = {
   fields: [
     // Email added by default
     // Add more fields as needed
+    { name: "fullName", type: "text" },
     // {
     //   name: "startups",
     //   type: "join",

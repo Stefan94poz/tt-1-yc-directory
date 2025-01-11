@@ -3,12 +3,13 @@ import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Startup } from "@/payload-types";
 
-function StartupCard({ post }: { post: StartupTypeCard }) {
+function StartupCard({ post }: { post: Startup | any }) {
   const {
     createdAt,
     views,
-    author: { _id: authorId, name },
+    author: { id: authorId, fullName },
     id,
     title,
     image: { url },
@@ -29,7 +30,7 @@ function StartupCard({ post }: { post: StartupTypeCard }) {
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${authorId}`}>
-            <p className="text-16-medium line-clamp-1">{name}</p>
+            <p className="text-16-medium line-clamp-1">{fullName}</p>
           </Link>
           <Link href={`/startup/${id}`}>
             <h3 className="text-36-semibold line-clamp-1">{title}</h3>
