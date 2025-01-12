@@ -1,6 +1,8 @@
 import StartupCard from "@/components/StartupCard";
 import SearchForm from "../../../components/SearchForm";
 import { Startup } from "@/payload-types";
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
 
 export default async function Home({
   searchParams,
@@ -8,10 +10,21 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
-  const startups = await fetch("http://localhost:3000/api/startups").then(
-    (res) => res.json()
-  );
-  console.log(startups);
+
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const startups = await payload
+    .find({
+      collection: "startups",
+      where: {
+        title: {
+          like: query,
+        },
+      },
+    })
+    .then((res) => res.docs);
 
   return (
     <>
@@ -27,8 +40,8 @@ export default async function Home({
           {query ? `Search Results for ${query}` : "All Startups"}
         </p>
         <ul className="mt-7 card_grid">
-          {startups?.docs?.length > 0 ? (
-            startups.docs.map((startup: Startup, index: number) => (
+          {startups?.length > 0 ? (
+            startups.map((startup: Startup, index: number) => (
               <StartupCard key={index} post={startup} />
             ))
           ) : (

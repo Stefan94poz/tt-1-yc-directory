@@ -28,6 +28,7 @@ export const Startups: CollectionConfig = {
       name: "author",
       type: "relationship",
       relationTo: "users",
+      hasMany: false,
     },
     {
       name: "views",
