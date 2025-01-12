@@ -3,26 +3,29 @@ import SearchForm from "../../../components/SearchForm";
 import { Startup } from "@/payload-types";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
+import type { Where } from "payload";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ query?: string }>;
 }) {
-  const query = (await searchParams).query;
+  const query = (await searchParams).query || "";
 
   const payload = await getPayload({
     config: configPromise,
   });
 
+  const querySearch: Where = {
+    title: {
+      contains: query,
+    },
+  };
+
   const startups = await payload
     .find({
       collection: "startups",
-      where: {
-        title: {
-          like: query,
-        },
-      },
+      where: querySearch,
     })
     .then((res) => res.docs);
 

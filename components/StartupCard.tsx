@@ -8,7 +8,7 @@ import { Startup } from "@/payload-types";
 function StartupCard({ post }: { post: Startup }) {
   const { createdAt, views, author, id, title, image, description, category } =
     post;
-  console.log("ASD,", post);
+
   return (
     <li className="startup-card group">
       <div className="flex justify-between">
