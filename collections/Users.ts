@@ -7,18 +7,19 @@ export const Users: CollectionConfig = {
     read: () => true,
   },
   admin: {
-    useAsTitle: "email",
+    useAsTitle: "fullName",
+    defaultColumns: ["fullName", "email"],
   },
   auth: true,
   fields: [
     // Email added by default
     // Add more fields as needed
     { name: "fullName", type: "text" },
-    // {
-    //   name: "startups",
-    //   type: "join",
-    //   on: "startups",
-    //   collection: "author",
-    // },
+    {
+      name: "Startups",
+      type: "join",
+      on: "author",
+      collection: "startups",
+    },
   ],
 };

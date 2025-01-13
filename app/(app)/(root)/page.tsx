@@ -17,9 +17,18 @@ export default async function Home({
   });
 
   const querySearch: Where = {
-    title: {
-      contains: query,
-    },
+    or: [
+      {
+        title: {
+          contains: query,
+        },
+      },
+      {
+        "author.fullName": {
+          contains: query,
+        },
+      },
+    ],
   };
 
   const startups = await payload
@@ -28,7 +37,7 @@ export default async function Home({
       where: querySearch,
     })
     .then((res) => res.docs);
-
+  console.log("startups", startups);
   return (
     <>
       <section className="pink_container">

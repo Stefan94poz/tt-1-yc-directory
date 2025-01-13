@@ -29,6 +29,7 @@ export const Startups: CollectionConfig = {
       type: "relationship",
       relationTo: "users",
       hasMany: false,
+      custom: ["email", "fullName"],
     },
     {
       name: "views",
