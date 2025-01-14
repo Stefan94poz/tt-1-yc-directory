@@ -1,16 +1,16 @@
-import StartupCard from "@/components/StartupCard";
 import SearchForm from "../../../components/SearchForm";
-import { Startup } from "@/payload-types";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import type { Where } from "payload";
+import GetStartups from "@/components/GetStartups";
 
+export const revalidate = 5;
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ query?: string }>;
 }) {
-  const query = (await searchParams).query || "";
+  const query = (await searchParams).query || null;
 
   const payload = await getPayload({
     config: configPromise,
@@ -20,12 +20,12 @@ export default async function Home({
     or: [
       {
         title: {
-          contains: query,
+          contains: query || "",
         },
       },
       {
         "author.fullName": {
-          contains: query,
+          contains: query || "",
         },
       },
     ],
@@ -37,7 +37,7 @@ export default async function Home({
       where: querySearch,
     })
     .then((res) => res.docs);
-  console.log("startups", startups);
+
   return (
     <>
       <section className="pink_container">
@@ -45,21 +45,13 @@ export default async function Home({
         <p className="sub-heading !max-w-3xl">
           Submit Ides, VOte on Pitches, and get Noticed in Virtual Competitors
         </p>
-        <SearchForm query={query} />
+        <SearchForm query={query || ""} />
       </section>
       <section className="section_container">
         <p className="text-30-semibold">
           {query ? `Search Results for ${query}` : "All Startups"}
         </p>
-        <ul className="mt-7 card_grid">
-          {startups?.length > 0 ? (
-            startups.map((startup: Startup, index: number) => (
-              <StartupCard key={index} post={startup} />
-            ))
-          ) : (
-            <p className="no-results">No startups found</p>
-          )}
-        </ul>
+        <GetStartups startups={startups} />
       </section>
     </>
   );
