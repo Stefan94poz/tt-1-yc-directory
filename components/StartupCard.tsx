@@ -41,7 +41,7 @@ function StartupCard({ post }: { post: Startup }) {
       <Link href={`/startup/${id}`}>
         <p className="startup_desc">{description}</p>
         <Image
-          src={image?.url || ""}
+          src={image?.url || "/"}
           alt="placeholder"
           className="startup_card_img"
           width={500}

@@ -4,7 +4,6 @@ import { getPayload } from "payload";
 import type { Where } from "payload";
 import GetStartups from "@/components/GetStartups";
 
-export const revalidate = 5;
 export default async function Home({
   searchParams,
 }: {
@@ -51,7 +50,7 @@ export default async function Home({
         <p className="text-30-semibold">
           {query ? `Search Results for ${query}` : "All Startups"}
         </p>
-        <GetStartups startups={startups} />
+        <GetStartups searchParams={searchParams} />
       </section>
     </>
   );
