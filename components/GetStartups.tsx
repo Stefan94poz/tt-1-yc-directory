@@ -1,25 +1,29 @@
 "use client";
 import React from "react";
-import StartupCard from "./StartupCard";
+import { useSearchParams } from "next/navigation";
+import { fetcher, queryStartups } from "@/lib/utils";
 import { Startup } from "@/payload-types";
+import StartupCard from "./StartupCard";
 import useSWR from "swr";
 
-const fetcher = (url: string) =>
-  fetch(url).then((r) => r.json().then((data) => data.docs));
+function GetStartups() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query") || null;
 
-function GetStartups({ searchParams }: string) {
-  // TODO: Create query that updates when db updates
-  const { data: startups } = useSWR("/api/startups", fetcher);
-  console.log("searchParams", searchParams);
-  const data = startups;
+  const { data: startups, isLoading } = useSWR(
+    `/api/startups${queryStartups(query)}`,
+    fetcher
+  );
+
+  console.log("startups", startups);
   return (
     <ul className="mt-7 card_grid">
-      {data?.length > 0 ? (
-        data.map((startup: Startup, index: number) => (
+      {startups?.length > 0 ? (
+        startups.map((startup: Startup, index: number) => (
           <StartupCard key={index} post={startup} />
         ))
       ) : (
-        <p className="no-results">No startups found</p>
+        <p className="no-results">{isLoading ? "Loading..." : "No results"}</p>
       )}
     </ul>
   );

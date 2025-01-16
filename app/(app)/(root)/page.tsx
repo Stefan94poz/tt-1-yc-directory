@@ -1,7 +1,4 @@
 import SearchForm from "../../../components/SearchForm";
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
-import type { Where } from "payload";
 import GetStartups from "@/components/GetStartups";
 
 export default async function Home({
@@ -10,32 +7,6 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query || null;
-
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  const querySearch: Where = {
-    or: [
-      {
-        title: {
-          contains: query || "",
-        },
-      },
-      {
-        "author.fullName": {
-          contains: query || "",
-        },
-      },
-    ],
-  };
-
-  const startups = await payload
-    .find({
-      collection: "startups",
-      where: querySearch,
-    })
-    .then((res) => res.docs);
 
   return (
     <>
@@ -50,7 +21,7 @@ export default async function Home({
         <p className="text-30-semibold">
           {query ? `Search Results for ${query}` : "All Startups"}
         </p>
-        <GetStartups searchParams={searchParams} />
+        <GetStartups />
       </section>
     </>
   );
