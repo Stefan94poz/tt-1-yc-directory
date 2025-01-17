@@ -14,7 +14,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <li>{author?.fullName}</li>
         <li>{views}</li>
         <li>{description}</li>
-        <li>{image?.url}</li>
+        <li>
+          <img src={image.url} width={"100px"} height={"100px"} />
+        </li>
+
         <li>{category}</li>
       </ul>
     </>
