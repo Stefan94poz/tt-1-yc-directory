@@ -15,6 +15,7 @@ export const Users: CollectionConfig = {
     // Email added by default
     // Add more fields as needed
     { name: "fullName", type: "text" },
+    { name: "avatar", type: "upload", relationTo: "media" },
     {
       name: "Startups",
       type: "join",

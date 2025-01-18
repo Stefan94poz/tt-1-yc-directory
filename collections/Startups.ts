@@ -1,3 +1,10 @@
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 
 export const Startups: CollectionConfig = {
@@ -30,6 +37,7 @@ export const Startups: CollectionConfig = {
       relationTo: "users",
       hasMany: false,
       custom: ["email", "fullName"],
+      required: true,
     },
     {
       name: "views",
@@ -40,6 +48,23 @@ export const Startups: CollectionConfig = {
     {
       name: "description",
       type: "text",
+      required: true,
+    },
+    {
+      name: "content",
+      type: "richText",
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [
+            ...rootFeatures,
+            HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+            HorizontalRuleFeature(),
+          ];
+        },
+      }),
+      label: false,
       required: true,
     },
     {

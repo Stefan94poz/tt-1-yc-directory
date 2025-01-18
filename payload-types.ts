@@ -70,6 +70,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   fullName?: string | null;
+  avatar?: (number | null) | Media;
   Startups?: {
     docs?: (number | Startup)[] | null;
     hasNextPage?: boolean | null;
@@ -84,21 +85,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "startups".
- */
-export interface Startup {
-  id: number;
-  title: string;
-  author?: (number | null) | User;
-  views?: number | null;
-  description: string;
-  category: string;
-  image?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -118,6 +104,36 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "startups".
+ */
+export interface Startup {
+  id: number;
+  title: string;
+  author: number | User;
+  views?: number | null;
+  description: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category: string;
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -186,6 +202,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   fullName?: T;
+  avatar?: T;
   Startups?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -224,6 +241,7 @@ export interface StartupsSelect<T extends boolean = true> {
   author?: T;
   views?: T;
   description?: T;
+  content?: T;
   category?: T;
   image?: T;
   updatedAt?: T;

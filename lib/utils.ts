@@ -14,7 +14,7 @@ export function formatDate(date: Date) {
     day: "numeric",
   };
 
-  return date.toLocaleDateString("en-US", options);
+  return new Date(date).toLocaleDateString("en-US", options);
 }
 
 export function queryStartups(query: string | null) {
@@ -22,6 +22,11 @@ export function queryStartups(query: string | null) {
     or: [
       {
         title: {
+          contains: query || "",
+        },
+      },
+      {
+        category: {
           contains: query || "",
         },
       },
