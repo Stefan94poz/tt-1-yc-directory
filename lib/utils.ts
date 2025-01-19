@@ -14,7 +14,10 @@ export function formatDate(date: Date) {
     day: "numeric",
   };
 
-  return new Date(date).toLocaleDateString("en-US", options);
+  return new Date(date).toLocaleDateString(
+    "en-US",
+    options
+  );
 }
 
 export function queryStartups(query: string | null) {
@@ -47,4 +50,6 @@ export function queryStartups(query: string | null) {
 }
 
 export const fetcher = (url: string) =>
-  fetch(url).then((r) => r.json().then((data) => data.docs));
+  fetch(url).then((r) =>
+    r.json().then((data) => data.docs)
+  );

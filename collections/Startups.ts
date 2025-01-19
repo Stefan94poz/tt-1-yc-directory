@@ -14,6 +14,7 @@ export const Startups: CollectionConfig = {
   },
   access: {
     read: () => true,
+    update: () => true,
   },
   // defaultPopulate: {
   //   title: true,
@@ -57,7 +58,9 @@ export const Startups: CollectionConfig = {
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
+            HeadingFeature({
+              enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+            }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
             HorizontalRuleFeature(),
@@ -65,7 +68,6 @@ export const Startups: CollectionConfig = {
         },
       }),
       label: false,
-      required: true,
     },
     {
       name: "category",

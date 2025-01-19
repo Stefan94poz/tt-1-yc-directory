@@ -115,7 +115,7 @@ export interface Startup {
   author: number | User;
   views?: number | null;
   description: string;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -129,7 +129,7 @@ export interface Startup {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   category: string;
   image?: (number | null) | Media;
   updatedAt: string;

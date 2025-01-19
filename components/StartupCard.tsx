@@ -3,16 +3,29 @@ import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Startup } from "@/payload-types";
+import { Media, Startup, User } from "@/payload-types";
 
 function StartupCard({ post }: { post: Startup }) {
-  const { createdAt, views, author, id, title, image, description, category } =
-    post;
+  const {
+    createdAt,
+    views,
+    author: auth,
+    id,
+    title,
+    image: img,
+    description,
+    category,
+  } = post;
+
+  const author = auth as User;
+  const image = img as Media;
 
   return (
     <li className="startup-card group">
       <div className="flex justify-between">
-        <p className="startup_card_date">{formatDate(new Date(createdAt))}</p>
+        <p className="startup_card_date">
+          {formatDate(new Date(createdAt))}
+        </p>
         <div className="flex gap-1.5">
           <EyeIcon className="size-6 text-primary" />
           <span className="text-16-medium">{views}</span>
@@ -22,10 +35,14 @@ function StartupCard({ post }: { post: Startup }) {
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${author?.id}`}>
-            <p className="text-16-medium line-clamp-1">{author?.fullName}</p>
+            <p className="text-16-medium line-clamp-1">
+              {author?.fullName}
+            </p>
           </Link>
           <Link href={`/startup/${id}`}>
-            <h3 className="text-36-semibold line-clamp-1">{title}</h3>
+            <h3 className="text-36-semibold line-clamp-1">
+              {title}
+            </h3>
           </Link>
         </div>
         <Link href={`/user/${author?.id}`}>
