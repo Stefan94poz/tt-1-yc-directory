@@ -1,41 +1,32 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Ping from "./Ping";
-import useSWR from "swr";
-import { Skeleton } from "./ui/skeleton";
+import { after } from "next/server";
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
 
-function View({ id }: { id: string }) {
+async function View({ id }: { id: string }) {
   // ?select[views]=true
-  const fetcher = (url: string) =>
-    fetch(url).then((r) => r.json());
+  const payload = await getPayload({
+    config: configPromise,
+  });
 
-  const { data, isLoading, mutate } = useSWR(
-    `/api/startups/${id}?select[views]=true`,
-    fetcher,
-  );
+  const data = await payload.findByID({
+    id: id,
+    collection: "startups",
+    select: { views: true },
+  });
+
+  after(async () => {
+    await payload.update({
+      id: id,
+      collection: "startups",
+      data: {
+        views: (data?.views as number) + 1,
+      },
+    });
+  });
 
   const { views } = data || {};
-
-  useEffect(() => {
-    const updateViews = async () => {
-      try {
-        await fetch(`/api/startups/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            views: views + 1, // Payload CMS supports the "increment" operator
-          }),
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    updateViews();
-    mutate();
-  }, [id, mutate, views]);
 
   return (
     <div className="view-container">
@@ -43,13 +34,7 @@ function View({ id }: { id: string }) {
         <Ping />
       </div>
       <div className="view-text">
-        <span className="font-black">
-          {isLoading ? (
-            <Skeleton className="view_skeleton" />
-          ) : (
-            views
-          )}
-        </span>
+        <span className="font-black">{views}</span>
       </div>
     </div>
   );

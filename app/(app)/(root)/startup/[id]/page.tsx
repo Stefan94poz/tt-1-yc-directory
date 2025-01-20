@@ -48,7 +48,7 @@ const Page = async ({
           src={image?.url || "/"}
           width={500}
           height={250}
-          className="w-full h-auto rounded-xl"
+          className="w-full h-[450px] rounded-xl object-cover object-top"
           alt="thumbnail"
         />
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
