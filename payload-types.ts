@@ -70,7 +70,9 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   fullName?: string | null;
+  password?: string | null;
   avatar?: (number | null) | Media;
+  profileImage?: string | null;
   Startups?: {
     docs?: (number | Startup)[] | null;
     hasNextPage?: boolean | null;
@@ -84,7 +86,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -202,7 +203,9 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   fullName?: T;
+  password?: T;
   avatar?: T;
+  profileImage?: T;
   Startups?: T;
   updatedAt?: T;
   createdAt?: T;
